@@ -1,2 +1,2 @@
-# serverless-demo
-Using the Serverless framework to build an infrastructure in AWS
+# Serverless demo
+Using the Serverless framework to build an infrastructure in AWS.
