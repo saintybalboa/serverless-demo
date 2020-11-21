@@ -1,0 +1,3 @@
+buckets:
+  artifact: ${self:app}-artifacts-${self:provider.stage}
+  deployment: ${self:app}-deployments-${self:provider.stage}

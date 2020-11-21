@@ -1,0 +1,18 @@
+app: serverless-demo
+service: ${self:app}-artifacts
+provider:
+  name: aws
+  stage: ${opt:env, 'dev'}
+  region: ${opt:region, 'eu-west-1'}
+  deploymentBucket:
+    name: ${file(./variables.yml):buckets.deployment}
+
+plugins:
+  - serverless-deployment-bucket
+
+resources:
+  Resources:
+    MarkitoolArtifactBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${file(./variables.yml):buckets.artifact}

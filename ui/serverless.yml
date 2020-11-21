@@ -1,0 +1,18 @@
+app: serverless-demo
+org: saintybalboa
+service: nextjs-demo
+
+nextjs-demo:
+  component: "@sls-next/serverless-component@1.19.0-alpha.7"
+  inputs:
+    runtime: nodejs12.x
+    nextConfigDir: ./nextjs-demo
+    domain:
+      - ${env.DOMAIN_PREFIX}
+      - ${env.DOMAIN}
+    bucketName: ${env.BUCKET}
+    priceClass: PriceClass_100
+    build:
+      env:
+        NEXT_PUBLIC_API_BASE_URL: ${env.API_BASE_URL}
+
