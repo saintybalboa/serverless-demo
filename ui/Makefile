@@ -18,7 +18,7 @@ download-sls-deployment-state-files:
 
 deploy: clean download-sls-deployment-state-files
 	@echo "Deploying..."
-	git clone git@github.com:saintybalbooa/$(REPO_FOLDER).git && \
+	git clone git@github.com:saintybalboa/$(REPO_FOLDER).git && \
 	cd ./$(REPO_FOLDER) && \
 	git checkout $(COMMIT_HASH) && \
 	npm install && \

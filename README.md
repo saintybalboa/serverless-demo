@@ -40,7 +40,7 @@ A [Github Action](./.github/workflows/ui-manual-deploy.yml) has been setup to al
 
 Manual deployments can also be carried out on your local machine. From the `ui` directory run:
 ```bash
-DOMAIN_PREFIX=prod API_BASE_URL=api.msswebdevelopment.com COMMIT_HASH=main make deploy
+DOMAIN_PREFIX=dev API_BASE_URL=api-dev.msswebdevelopment.com COMMIT_HASH=main make deploy
 ```
 
 #### Removing
