@@ -1,11 +1,10 @@
 # Serverless demo
 
 Defines and deploys the following infrastructure using the Serverless framework:
-- Database: AWS RDS Posgres **(TBC)**
-- Jobs: Lambda, SQS & SNS **(TBC)**
-- Web: Lambda@Edge & Cloudfront **(TBC)**
+- Web: Lambda@Edge & Cloudfront
 - API: Amazon API Gateway **(TBC)**
-- Microservice: AWS ElasticBeanstalk
+- Database: AWS RDS Posgres **(TBC)**
+- Background jobs: Lambda, SQS & SNS **(TBC)**
 
 ## Initial setup
 
