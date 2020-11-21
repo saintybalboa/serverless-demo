@@ -25,7 +25,7 @@ jobs:
         with:
           path: ui/nextjs-demo
           repository: saintybalboa/nextjs-demo
-          token: ${{ secrets.NEXTJS_DEMO_REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           ref: ${{ github.event.client_payload.commit-hash }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
