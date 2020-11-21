@@ -102,3 +102,13 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Visual Studio Code
+.DS_Store
+
+# Ignore anything suffixed with .old
+*.old
+*.old.*
+
+# Ignore UI repo
+ui/nextjs-demo
