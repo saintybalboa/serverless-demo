@@ -12,7 +12,7 @@ plugins:
 
 resources:
   Resources:
-    MarkitoolArtifactBucket:
+    ServerlessDemoArtifactBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${file(./variables.yml):buckets.artifact}
