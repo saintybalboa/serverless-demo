@@ -1,5 +1,4 @@
 app: serverless-demo
-org: saintybalboa
 service: nextjs-demo
 
 nextjs-demo:
