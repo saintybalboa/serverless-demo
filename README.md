@@ -23,7 +23,7 @@ ENV=dev make setup
 
 ## Deployments
 
-Github workflows are used for the deployment of services within the Serverless Demo infrastructure. A personal access token has been setup to provide Serverless Demo Infrastructure builds access to the other repositories.
+Github workflows are used for the deployment of services within the Serverless Demo infrastructure. A Github personal access token has been setup to provide Serverless Demo Infrastructure builds access to the other repositories. `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` environment variables are set from the values stored in secrets to allow Serverless to deploy the infrastructure to AWS from Github.
 
 ### NextJS Demo
 
@@ -37,7 +37,9 @@ A [Github Action](./.github/workflows/ui-deploy.yml) has been setup to deploy th
 
 A [Github Action](./.github/workflows/ui-manual-deploy.yml) has been setup to allow deployments to the production domain in AWS to be triggered manually via the Github interface.
 
-Manual deployments can also be carried out on your local machine. From the `ui` directory run:
+Manual deployments can also be carried out on your local machine. Ensure [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html) is installed on your local machine and that the `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` environment variables are set. This is required to allow Serverless to deploy the infrastructure to AWS from your local machine.
+
+From the `ui` directory run:
 ```bash
 DOMAIN_PREFIX=dev API_BASE_URL=api-dev.msswebdevelopment.com COMMIT_HASH=main make deploy
 ```
