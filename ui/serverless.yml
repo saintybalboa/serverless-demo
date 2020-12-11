@@ -2,7 +2,7 @@ app: serverless-demo
 service: nextjs-demo
 
 nextjs-demo:
-  component: "@sls-next/serverless-component@1.19.0-alpha.7"
+  component: "@sls-next/serverless-component@1.18.0"
   inputs:
     runtime: nodejs12.x
     nextConfigDir: ./nextjs-demo
