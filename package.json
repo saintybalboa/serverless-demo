@@ -1,0 +1,26 @@
+{
+  "name": "serverless-demo",
+  "version": "1.0.0",
+  "description": "Using the Serverless framework to build an infrastructure in AWS.",
+  "main": "index.js",
+  "dependencies": {
+    "serverless": "^2.3.0",
+    "serverless-deployment-bucket": "^1.1.2",
+    "serverless-plugin-elastic-beanstalk": "github:saintybalboa/serverless-plugin-elastic-beanstalk#create-application-environment",
+    "serverless-s3-deploy": "^0.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saintybalboa/serverless-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saintybalboa/serverless-demo/issues"
+  },
+  "homepage": "https://github.com/saintybalboa/serverless-demo#readme"
+}
