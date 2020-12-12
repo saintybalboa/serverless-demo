@@ -5,7 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "serverless": "^2.3.0",
+    "serverless-certificate-creator": "^1.4.0",
     "serverless-deployment-bucket": "^1.1.2",
+    "serverless-domain-manager": "^5.1.0",
     "serverless-plugin-elastic-beanstalk": "github:saintybalboa/serverless-plugin-elastic-beanstalk#create-application-environment",
     "serverless-s3-deploy": "^0.9.0"
   },

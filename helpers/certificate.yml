@@ -1,0 +1,22 @@
+app: serverless-demo
+service: serverless-demo-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: prod
+  region: eu-west-1
+  deploymentBucket:
+    name: ${file(./variables.yml):buckets.deployment}
+
+plugins:
+  - serverless-certificate-creator
+
+custom:
+  customCertificate:
+    certificateName: ${env:DOMAIN}
+    hostedZoneIds: ${env:HOSTED_ZONE_ID}
+    region: ${env:CERT_REGION, self:provider.region}
+    enabled: true
+    rewriteRecords: false
+

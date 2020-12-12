@@ -1,0 +1,31 @@
+app: serverless-demo
+service: serverless-demo-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: prod
+  region: eu-west-1
+  deploymentBucket:
+    name: ${file(../variables.yml):buckets.deployment}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "cognito-idp:AdminInitiateAuth"
+      Resource: "arn:aws:cognito-idp:eu-west-1:*:*"
+
+plugins:
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: ${env:DOMAIN}
+    autoDomain: true
+    autoDomainWaitFor: 120
+    certificateName: ${env:DOMAIN}
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
+functions:
+  ${file(./${env:REPO}/functions.yml)}

@@ -1,13 +1,17 @@
 
 SHELL := /bin/bash
 SLS_DEBUG=*
-DOMAIN=msswebdevelopment.com
-BUCKET=nextjs-demo-bucket-$(DOMAIN_PREFIX)
-REPO_FOLDER=nextjs-demo
 
 clean:
 	@echo "Cleaning..."
-	rm -rf $(REPO_FOLDER) .serverless
+	rm -rf .serverless
+
+checkout:
+	@echo "Checking out branch/commit hash '$(COMMIT_HASH)' in repository '$(REPO)' ..."
+	rm -rf $(REPO)
+	git clone git@github.com:$(REPO).git $(REPO) && \
+	cd ./$(REPO) && \
+	git checkout $(COMMIT_HASH)
 
 download-sls-deployment-state-files:
 	@echo "Checking '$(BUCKET)' bucket exists..."
@@ -18,13 +22,11 @@ download-sls-deployment-state-files:
 
 deploy: clean download-sls-deployment-state-files
 	@echo "Deploying..."
-	git clone git@github.com:saintybalboa/$(REPO_FOLDER).git && \
-	cd ./$(REPO_FOLDER) && \
-	git checkout $(COMMIT_HASH) && \
+	cd ./$(REPO) && \
 	npm install && \
 	npm run build && \
-	cd ../ && \
-    BUCKET=$(BUCKET) DOMAIN_PREFIX=$(DOMAIN_PREFIX) DOMAIN=$(DOMAIN) API_BASE_URL=$(API_BASE_URL) sls
+	cd ../../ && \
+    BUCKET=$(BUCKET) DOMAIN_PREFIX=$(DOMAIN_PREFIX) DOMAIN=$(DOMAIN) API_BASE_URL=$(API_BASE_URL) REPO=$(REPO) sls
 
 	@echo "Uploading Serverless deployment state files"
 	aws s3 sync .serverless s3://$(BUCKET)/.serverless --delete
@@ -32,5 +34,4 @@ deploy: clean download-sls-deployment-state-files
 remove: clean download-sls-deployment-state-files
 	@echo "Removing..."
 	@echo "Bucket: $(BUCKET)"
-	@echo "Domain: $(DOMAIN_PREFIX).$(DOMAIN)"
 	sls remove

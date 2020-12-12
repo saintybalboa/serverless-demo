@@ -93,6 +93,7 @@ dist
 
 # Serverless directories
 .serverless/
+.serverless_nextjs/
 
 # FuseBox cache
 .fusebox/
@@ -110,5 +111,5 @@ dist
 *.old
 *.old.*
 
-# Ignore UI repo
-ui/nextjs-demo
+# Ignore repositories
+saintybalboa/

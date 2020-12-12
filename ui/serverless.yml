@@ -1,11 +1,11 @@
 app: serverless-demo
-service: nextjs-demo
+service: serverless-demo-ui
 
 nextjs-demo:
   component: "@sls-next/serverless-component@1.18.0"
   inputs:
     runtime: nodejs12.x
-    nextConfigDir: ./nextjs-demo
+    nextConfigDir: ./${env.REPO}
     domain:
       - ${env.DOMAIN_PREFIX}
       - ${env.DOMAIN}
@@ -14,4 +14,3 @@ nextjs-demo:
     build:
       env:
         NEXT_PUBLIC_API_BASE_URL: ${env.API_BASE_URL}
-

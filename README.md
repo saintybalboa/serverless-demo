@@ -8,26 +8,21 @@ Defines and deploys the following infrastructure using the Serverless framework:
 
 ## Initial setup
 
-The initial setup creates an S3 bucket to store artifacts required by services in the Serverless Demo infrastructure. It also creates a dedicated bucket for serverless deployments. This is a one time setup only, for each environment (ie dev, test, prod) in AWS.
+Create host zone in Route 53 and poi custom domain creates an S3 bucket to store artifacts required by services in the Serverless Demo infrastructure. It also creates a dedicated bucket for serverless deployments. This is a one time setup only, for each environment (ie dev, test, prod) in AWS.
 
 Install dependencies:
 ```bash
-npm i
 npm i -g serverless
-```
-
-Setup Serverless in AWS:
-```bash
-ENV=dev make setup
+npm i
 ```
 
 ## Deployments
 
 Github workflows are used for the deployment of services within the Serverless Demo infrastructure. A Github personal access token has been setup to provide Serverless Demo Infrastructure builds access to the other repositories. `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` environment variables are set from the values stored in secrets to allow Serverless to deploy the infrastructure to AWS from Github.
 
-### NextJS Demo
+### UI
 
-Deployments are done using the [Serverless Next.js Component](https://www.serverless.com/blog/serverless-nextjs) which utilises the Serverless Framework to deploy Next.js apps to AWS Lambda@Edge functions in every AWS CloudFront edge locations.
+Deploys the [NextJS Demo](https://github.com/saintybalboa/nextjs-demo) web app to a custom domain in AWS. This is done using the [Serverless Next.js Component](https://www.serverless.com/blog/serverless-nextjs) which utilises the Serverless Framework to deploy Next.js apps to AWS Lambda@Edge functions in every AWS CloudFront edge locations.
 
 #### Automated deployments
 
@@ -39,18 +34,58 @@ A [Github Action](./.github/workflows/ui-manual-deploy.yml) has been setup to al
 
 Manual deployments can also be carried out on your local machine. Ensure [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html) is installed on your local machine and that the `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` environment variables are set. This is required to allow Serverless to deploy the infrastructure to AWS from your local machine.
 
+From the `ui` directory:
+```bash
+cd ./ui
+```
+
+Checkout the ui repository:
+```bash
+REPO=saintybalboa/nextjs-demo COMMIT_HASH=main make checkout
+```
+
+Deploy:
+```bash
+BUCKET=serverless-demo-ui-bucket-dev DOMAIN_PREFIX=dev DOMAIN=msswebdevelopment.com API_BASE_URL=https://api-dev.msswebdevelopment.com REPO=saintybalboa/nextjs-demo make deploy
+```
+
+> **Please note:** It can take a few hours for the DNS changes of newly created domains to be updated across the Internet.
+
+#### Removing
+
+The UI infrastructure stack can also be be removed from a specific domain in AWS.
 From the `ui` directory run:
 ```bash
-DOMAIN_PREFIX=dev API_BASE_URL=api-dev.msswebdevelopment.com COMMIT_HASH=main make deploy
+BUCKET=serverless-demo-ui-bucket-dev make remove
+```
+
+> **Important:** This will only remove the domain names and disable the CloudFront distribution. The CloudFront distribution will need to be deleted via the AWS console.
+
+### API
+
+Deploy the [AWS API Gateway Demo](https://github.com/saintybalboa/aws-api-gateway-demo) to a custom domain in AWS.
+
+Create certificate:
+```bash
+DOMAIN=api-dev.msswebdevelopment.com HOSTED_ZONE_ID=XXXX CERT_REGION=us-east-1 make create-cert
+```
+
+Deploy:
+```bash
+DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo HOSTED_ZONE_ID=XXXX make deploy
 ```
 
 #### Removing
 
-The NextJS Demo application stack can also be be removed from a specific domain in AWS.
-From the `ui` directory run:
+From the `api` directory remove:
 ```bash
-cd ui
-DOMAIN_PREFIX=dev make remove
+DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo HOSTED_ZONE_ID=Z2L1O1C41SKPHI make remove
 ```
 
-**Important:** This will remove the domain names and disable the CloudFront distribution but it will not delete it. The CloudFront distribution will need to be delete via the AWS console.
+> **Please note:** It can take up to 40 minutes to delete the stack in AWS and remove the domain. The certificate cannot be removed until this process is complete.
+
+Remove certificate:
+```bash
+DOMAIN=api-dev.msswebdevelopment.com HOSTED_ZONE_ID=Z2L1O1C41SKPHI CERT_REGION=us-east-1 make remove-cert
+```
+

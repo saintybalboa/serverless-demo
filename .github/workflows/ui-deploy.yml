@@ -23,22 +23,23 @@ jobs:
       - name: Checkout nextjs-demo repository
         uses: actions/checkout@v2
         with:
-          path: ui/nextjs-demo
-          repository: saintybalboa/nextjs-demo
+          path: ui/${{ github.event.client_payload.repo }}
+          repository: ${{ github.event.client_payload.repo }}
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           ref: ${{ github.event.client_payload.commit-hash }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        working-directory: ui/nextjs-demo
-        run: |
-          npm i
       - name: Deploy
         working-directory: ui
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          DOMAIN_PREFIX=dev API_BASE_URL=https://api-dev.msswebdevelopment.com sls
+          BUCKET=serverless-demo-ui-bucket-dev \
+          DOMAIN_PREFIX=dev \
+          DOMAIN=msswebdevelopment.com \
+          API_BASE_URL=https://api-dev.msswebdevelopment.com \
+          REPO=${{ github.event.client_payload.repo }} \
+          make deploy
