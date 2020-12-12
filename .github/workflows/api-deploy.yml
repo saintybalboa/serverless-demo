@@ -2,7 +2,7 @@ name: API Deployment Workflow
 
 on:
   repository_dispatch:
-    types: [ui-deploy]
+    types: [api-deploy]
 
 jobs:
   deploy:
