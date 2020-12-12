@@ -1,8 +1,8 @@
 # Serverless demo
 
-Defines and deploys the following infrastructure using the Serverless framework:
+Defines an AWS infrastructure for the following services:
 - UI: Lambda@Edge & Cloudfront
-- API: Amazon API Gateway **(TBC)**
+- API: Amazon API Gateway
 - Database: AWS RDS Posgres **(TBC)**
 - Background jobs: Lambda, SQS & SNS **(TBC)**
 
@@ -18,7 +18,7 @@ npm i
 
 ## Deployments
 
-Github workflows are used for the deployment of services within the Serverless Demo infrastructure. A Github personal access token has been setup to provide Serverless Demo Infrastructure builds access to the other repositories. `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` environment variables are set from the values stored in secrets to allow Serverless to deploy the infrastructure to AWS from Github.
+Github workflows are used for the deployment of services within the Serverless Demo infrastructure. A Github personal access token has been setup to provide Serverless Demo Infrastructure builds access to the other repositories. AWS environment variables `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` are set from the values stored in secrets to allow Serverless to deploy the infrastructure to AWS from Github.
 
 ### UI
 
@@ -34,18 +34,14 @@ A [Github Action](./.github/workflows/ui-manual-deploy.yml) has been setup to al
 
 Manual deployments can also be carried out on your local machine. Ensure [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html) is installed on your local machine and that the `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` environment variables are set. This is required to allow Serverless to deploy the infrastructure to AWS from your local machine.
 
-From the `ui` directory:
+Checkout the UI repository:
 ```bash
-cd ./ui
+REPO=saintybalboa/nextjs-demo COMMIT_HASH=main SERVICE=ui make checkout-repo
 ```
 
-Checkout the ui repository:
+Deploy stack to AWS:
 ```bash
-REPO=saintybalboa/nextjs-demo COMMIT_HASH=main make checkout
-```
-
-Deploy:
-```bash
+cd ./ui &&
 BUCKET=serverless-demo-ui-bucket-dev DOMAIN_PREFIX=dev DOMAIN=msswebdevelopment.com API_BASE_URL=https://api-dev.msswebdevelopment.com REPO=saintybalboa/nextjs-demo make deploy
 ```
 
@@ -54,8 +50,10 @@ BUCKET=serverless-demo-ui-bucket-dev DOMAIN_PREFIX=dev DOMAIN=msswebdevelopment.
 #### Removing
 
 The UI infrastructure stack can also be be removed from a specific domain in AWS.
-From the `ui` directory run:
+
+Remove stack from AWS:
 ```bash
+cd ./ui &&
 BUCKET=serverless-demo-ui-bucket-dev make remove
 ```
 
@@ -70,16 +68,23 @@ Create certificate:
 DOMAIN=api-dev.msswebdevelopment.com HOSTED_ZONE_ID=XXXX CERT_REGION=us-east-1 make create-cert
 ```
 
-Deploy:
+Checkout the API repository:
 ```bash
-DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo HOSTED_ZONE_ID=XXXX make deploy
+REPO=saintybalboa/aws-api-gateway-demo COMMIT_HASH=main SERVICE=api make checkout-repo
+```
+
+Deploy stack to AWS:
+```bash
+cd ./api &&
+DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo make deploy
 ```
 
 #### Removing
 
-From the `api` directory remove:
+Remove stack from AWS:
 ```bash
-DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo HOSTED_ZONE_ID=Z2L1O1C41SKPHI make remove
+cd ./api &&
+DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo make deploy
 ```
 
 > **Please note:** It can take up to 40 minutes to delete the stack in AWS and remove the domain. The certificate cannot be removed until this process is complete.
@@ -88,4 +93,5 @@ Remove certificate:
 ```bash
 DOMAIN=api-dev.msswebdevelopment.com HOSTED_ZONE_ID=Z2L1O1C41SKPHI CERT_REGION=us-east-1 make remove-cert
 ```
+
 

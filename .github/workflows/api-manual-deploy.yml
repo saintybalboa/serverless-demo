@@ -1,4 +1,4 @@
-name: UI Manual Deployment Workflow
+name: API Manual Deployment Workflow
 
 on:
   workflow_dispatch:
@@ -7,22 +7,18 @@ on:
         description: 'Enter the commit hash or branch'
         required: true
         default: 'main'
-      domain-prefix:
-        description: 'Enter the domain prefix'
-        required: true
-        default: 'www'
       domain:
         description: 'Enter the domain name'
         required: true
-        default: 'msswebdevelopment.com'
-      api-base-url:
-        description: 'Enter the api base url'
+        default: 'api.msswebdevelopment.com'
+      hosted-zone-id:
+        description: 'Enter the HostedZoneId'
         required: true
-        default: 'https://api.msswebdevelopment.com'
+        default: 'Z2L1O1C41SKPHI'
       repo:
         description: 'Github repository that contains the API source code'
         required: true
-        default: 'saintybalboa/nextjs-demo'
+        default: 'saintybalboa/aws-api-gateway-demo'
 
 jobs:
   deploy:
@@ -30,6 +26,9 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -40,10 +39,10 @@ jobs:
         run: |
           npm i -g serverless
           npm i
-      - name: Checkout the UI repository
+      - name: Checkout the API repository
         uses: actions/checkout@v2
         with:
-          path: ui/${{ github.event.inputs.repo }}
+          path: api/${{ github.event.inputs.repo }}
           repository: ${{ github.event.inputs.repo }}
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           ref: ${{ github.event.inputs.commit-hash }}
@@ -51,15 +50,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Deploy
-        working-directory: ui
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Certificate check
+        working-directory: api
         run: |
-          DOMAIN_PREFIX=${{ github.event.inputs.domain-prefix }} \
+          HOSTED_ZONE_ID=${{ github.event.inputs.hosted-zone-id }} \
           DOMAIN=${{ github.event.inputs.domain }} \
-          API_BASE_URL=${{ github.event.inputs.api-base-url }} \
-          BUCKET=serverless-demo-ui-bucket-${{ github.event.inputs.domain-prefix }} \
+          REPO=${{ github.event.inputs.repo }} \
+          make create-cert
+      - name: Deploy
+        working-directory: api
+        run: |
+          DOMAIN=${{ github.event.inputs.domain }} \
           REPO=${{ github.event.inputs.repo }} \
           make deploy

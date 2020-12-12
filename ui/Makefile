@@ -6,13 +6,6 @@ clean:
 	@echo "Cleaning..."
 	rm -rf .serverless
 
-checkout:
-	@echo "Checking out branch/commit hash '$(COMMIT_HASH)' in repository '$(REPO)' ..."
-	rm -rf $(REPO)
-	git clone git@github.com:$(REPO).git $(REPO) && \
-	cd ./$(REPO) && \
-	git checkout $(COMMIT_HASH)
-
 download-sls-deployment-state-files:
 	@echo "Checking '$(BUCKET)' bucket exists..."
 	@if aws s3api head-bucket --bucket "$(BUCKET)" 2>/dev/null; then\

@@ -1,5 +1,4 @@
 app: serverless-demo
-service: serverless-demo-api
 
 provider:
   name: aws
