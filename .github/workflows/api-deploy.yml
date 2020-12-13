@@ -45,6 +45,7 @@ jobs:
         working-directory: api/${{ github.event.client_payload.repo }}
         run: |
           echo "@saintybalboa:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
+          ls node_modules/@saintybalboa
       - name: Deploy
         working-directory: api
         run: |
