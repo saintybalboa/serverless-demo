@@ -50,7 +50,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Certificate check
-        working-directory: api
         run: |
           HOSTED_ZONE_ID=${{ github.event.inputs.hosted-zone-id }} \
           DOMAIN=${{ github.event.inputs.domain }} \

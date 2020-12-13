@@ -35,7 +35,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Certificate check
-        working-directory: api
         run: |
           HOSTED_ZONE_ID=${{ secrets.HOSTED_ZONE_ID }} \
           DOMAIN=api-dev.msswebdevelopment.com \
