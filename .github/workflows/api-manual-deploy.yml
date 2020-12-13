@@ -34,6 +34,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Set NPM Auth Token
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: echo "//npm.pkg.github.com/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
       - name: Install dependencies
         run: |
           npm i -g serverless
@@ -50,6 +54,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Certificate check
+        working-directory: ''
         run: |
           HOSTED_ZONE_ID=${{ github.event.inputs.hosted-zone-id }} \
           DOMAIN=${{ github.event.inputs.domain }} \

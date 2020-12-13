@@ -10,7 +10,7 @@ clean:
 deploy: clean
 	@echo "Deploying..."
 	cd ./$(REPO) && \
-	NODE_ENV=development npm install && \
+	npm install && \
 	npm run build && \
 	cd ../../ && \
 	DOMAIN=$(DOMAIN) REPO=$(REPO) sls deploy
