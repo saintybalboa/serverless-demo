@@ -43,9 +43,7 @@ jobs:
           make create-cert
       - name: Set NPM Auth Token
         working-directory: api/${{ github.event.client_payload.repo }}
-        run: |
-          echo "@saintybalboa:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
-          ls node_modules/@saintybalboa
+        run: echo "@saintybalboa:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
       - name: Deploy
         working-directory: api
         run: |
