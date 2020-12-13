@@ -44,8 +44,7 @@ jobs:
       - name: Set NPM Auth Token
         working-directory: api/${{ github.event.client_payload.repo }}
         run: |
-          echo "//npm.pkg.github.com/:_authToken=test_token" > .npmrc
-          cat .npmrc
+          echo "@saintybalboa:registry=https://npm.pkg.github.com//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
       - name: Deploy
         working-directory: api
         run: |
