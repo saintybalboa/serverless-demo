@@ -1,4 +1,5 @@
 app: serverless-demo
+service: serverless-demo-certs
 
 provider:
   name: aws
