@@ -23,7 +23,7 @@ jobs:
         run: |
           npm i -g serverless
           npm i
-      - name: Checkout the UI repository
+      - name: Checkout the API repository
         uses: actions/checkout@v2
         with:
           path: api/${{ github.event.client_payload.repo }}
