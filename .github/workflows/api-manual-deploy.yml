@@ -14,7 +14,6 @@ on:
       hosted-zone-id:
         description: 'Enter the HostedZoneId'
         required: true
-        default: 'Z2L1O1C41SKPHI'
       repo:
         description: 'Github repository that contains the API source code'
         required: true
