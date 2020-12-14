@@ -30,10 +30,6 @@ jobs:
           repository: ${{ github.event.client_payload.repo }}
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           ref: ${{ github.event.client_payload.commit-hash }}
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
       - name: Certificate check
         working-directory: ''
         run: |
@@ -47,6 +43,7 @@ jobs:
       - name: Deploy
         working-directory: api
         run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
           DOMAIN=api-dev.msswebdevelopment.com \
           REPO=${{ github.event.client_payload.repo }} \
           make deploy
