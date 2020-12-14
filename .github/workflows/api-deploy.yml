@@ -38,14 +38,11 @@ jobs:
           REPO=${{ github.event.client_payload.repo }} \
           make create-cert
       - name: Set NPM Auth Token
-        uses: ferluisxd/create-npmrc@3
-        with:
-          org_name: saintybalboa
-          auth_token: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: echo 'registry = https://npm.pkg.github.com/saintybalboa \
+          //npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc'
       - name: Deploy
         working-directory: api
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
           DOMAIN=api-dev.msswebdevelopment.com \
           REPO=${{ github.event.client_payload.repo }} \
           make deploy
