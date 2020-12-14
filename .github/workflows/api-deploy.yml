@@ -19,6 +19,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@saintybalboa'
       - name: Set NPM Auth Token
         run: echo 'registry = https://npm.pkg.github.com/saintybalboa \
           //npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc'
