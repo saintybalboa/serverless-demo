@@ -42,8 +42,8 @@ jobs:
           REPO=${{ github.event.client_payload.repo }} \
           make create-cert
       - name: Set NPM Auth Token
-        working-directory: api/${{ github.event.client_payload.repo }}
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
+        working-directory: api
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" >> .npmrc
       - name: Deploy
         working-directory: api
         run: |
