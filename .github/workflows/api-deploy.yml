@@ -20,13 +20,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Set NPM Auth Token
-        run:
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }} >> .npmrc"
-          npm i @saintybalboa/auth@0.0.4
       - name: Install dependencies
         run: |
-          npm i @saintybalboa/auth@0.0.4
+          npm i -g serverless
+          npm i
       - name: Checkout the API repository
         uses: actions/checkout@v2
         with:
