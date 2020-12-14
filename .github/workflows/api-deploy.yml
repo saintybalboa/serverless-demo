@@ -23,7 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Set NPM Auth Token
         run:
-          echo '//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }} >> .npmrc'
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }} >> .npmrc"
           npm i @saintybalboa/auth@0.0.4
       - name: Install dependencies
         run: |
