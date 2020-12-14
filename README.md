@@ -6,9 +6,16 @@ Defines an AWS infrastructure for the following services:
 - Database: AWS RDS Posgres **(TBC)**
 - Background jobs: Lambda, SQS & SNS **(TBC)**
 
-## Initial setup
+## Instructions
 
-Create host zone in Route 53 and poi custom domain creates an S3 bucket to store artifacts required by services in the Serverless Demo infrastructure. It also creates a dedicated bucket for serverless deployments. This is a one time setup only, for each environment (ie dev, test, prod) in AWS.
+Create a public hosted zone in AWS Route 53 to route traffic for a your custom domain.
+
+## Local setup
+
+Set the access token for authenticating against the Github package registry.
+```bash
+export NPM_AUTH_TOKEN=XXXX
+```
 
 Install dependencies:
 ```bash
@@ -63,6 +70,8 @@ BUCKET=serverless-demo-ui-bucket-dev make remove
 
 Deploy the [AWS API Gateway Demo](https://github.com/saintybalboa/aws-api-gateway-demo) to a custom domain in AWS.
 
+> **Important:** Certificates for an AWS API Gateway must be created in the us-east region in order to be applied to a CloudFront distribution.
+
 Create certificate:
 ```bash
 DOMAIN=api-dev.msswebdevelopment.com HOSTED_ZONE_ID=XXXX CERT_REGION=us-east-1 make create-cert
@@ -91,7 +100,5 @@ DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo make
 
 Remove certificate:
 ```bash
-DOMAIN=api-dev.msswebdevelopment.com HOSTED_ZONE_ID=Z2L1O1C41SKPHI CERT_REGION=us-east-1 make remove-cert
+DOMAIN=api-dev.msswebdevelopment.com HOSTED_ZONE_ID=XXXX CERT_REGION=us-east-1 make remove-cert
 ```
-
-
