@@ -24,8 +24,6 @@ jobs:
           //npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc'
       - name: Install dependencies
         run: |
-          npm i -g serverless
-          npm i
           npm i @saintybalboa/auth@0.0.4
       - name: Checkout the API repository
         uses: actions/checkout@v2
