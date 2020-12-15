@@ -1,7 +1,6 @@
 
 SHELL := /bin/bash
 SLS_DEBUG=*
-REPO=saintybalboa/aws-api-gateway-demo
 
 clean:
 	@echo "Cleaning..."

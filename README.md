@@ -93,7 +93,7 @@ DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo make
 Remove stack from AWS:
 ```bash
 cd ./api &&
-DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo make deploy
+DOMAIN=api-dev.msswebdevelopment.com REPO=saintybalboa/aws-api-gateway-demo make remove
 ```
 
 > **Please note:** It can take up to 40 minutes to delete the stack in AWS and remove the domain. The certificate cannot be removed until this process is complete.
