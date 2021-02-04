@@ -4,7 +4,8 @@
   "description": "Using the Serverless framework to build an infrastructure in AWS.",
   "main": "index.js",
   "dependencies": {
-    "serverless": "^2.3.0",
+    "@saintybalboa/serverless-aws-ses": "0.0.3",
+    "serverless": "^2.4.0",
     "serverless-certificate-creator": "^1.4.0",
     "serverless-deployment-bucket": "^1.1.2",
     "serverless-domain-manager": "^5.1.0",

@@ -1,4 +1,3 @@
-
 SHELL := /bin/bash
 SLS_DEBUG=*
 
@@ -12,7 +11,7 @@ deploy: clean
 	npm install && \
 	npm run build && \
 	cd ../../ && \
-	DOMAIN=$(DOMAIN) REPO=$(REPO) sls deploy
+	ENV=$(ENV) DOMAIN=$(DOMAIN) REPO=$(REPO) sls deploy
 
 remove: clean
 	@echo "Removing..."

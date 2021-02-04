@@ -19,7 +19,7 @@ deploy: clean download-sls-deployment-state-files
 	npm install && \
 	npm run build && \
 	cd ../../ && \
-    BUCKET=$(BUCKET) DOMAIN_PREFIX=$(DOMAIN_PREFIX) DOMAIN=$(DOMAIN) API_BASE_URL=$(API_BASE_URL) REPO=$(REPO) sls
+    BUCKET=$(BUCKET) DOMAIN=$(DOMAIN) API_BASE_URL=$(API_BASE_URL) REPO=$(REPO) sls
 
 	@echo "Uploading Serverless deployment state files"
 	aws s3 sync .serverless s3://$(BUCKET)/.serverless --delete

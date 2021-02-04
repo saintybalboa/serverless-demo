@@ -1,0 +1,39 @@
+app: serverless-demo
+service: serverless-demo-ses
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: prod
+  region: us-east-1
+  deploymentBucket:
+    name: ${file(../variables.yml):buckets.deployment}
+
+plugins:
+  - serverless-deployment-bucket
+  - '@saintybalboa/serverless-aws-ses'
+
+custom:
+  sesConfig:
+    domain: ${env:EMAIL_SENDER_DOMAIN}
+    hostedZoneId: ${env:HOSTED_ZONE_ID}
+    emailSenderAliases:
+      - ${env:EMAIL_SENDER_ALIAS}
+    emailReceiptRuleActions:
+      - SNSAction:
+          TopicArn: ${env:SNS_TOPIC_ARN}
+          Encoding: UTF-8
+
+resources:
+  Resources:
+    ServerlessDemoSNSEmailTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: 'Forward incoming email for custom SES email sender to specified forward email address'
+        TopicName: ServerlessDemoEmailForwarder
+    ServerlessDemoEmailSNSTopicSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: ${env:FORWARD_EMAIL_ADDRESS}
+        Protocol: email
+        TopicArn: {"Ref": "ServerlessDemoSNSEmailTopic"}

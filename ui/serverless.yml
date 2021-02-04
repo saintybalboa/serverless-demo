@@ -7,7 +7,6 @@ nextjs-demo:
     runtime: nodejs12.x
     nextConfigDir: ./${env.REPO}
     domain:
-      - ${env.DOMAIN_PREFIX}
       - ${env.DOMAIN}
     bucketName: ${env.BUCKET}
     priceClass: PriceClass_100
